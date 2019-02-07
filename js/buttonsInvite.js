@@ -171,7 +171,7 @@ function CancelMeeting(){
 	  	RetrieveOpenTimeslot({calID:localStorage.getItem("currentCalID"), date:document.getElementById('meetDate').value, type:"Open"});
 	  }
 	  successAlert("The meeting has been canceled!");
-	  // hideLoader();
+	  hideLoader();
 	} else {
 		results.innerHTML = `Failed!`;
 	  //updateHistory(arg1, arg2, "N/A");
