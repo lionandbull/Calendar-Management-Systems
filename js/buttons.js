@@ -979,7 +979,7 @@ function ShowAllMeetings(){
 			// document.getElementById("resultsP").innerHTML = document.getElementById("resultsP").innerHTML + `<br>${js.ArrayList[i].startTime}</b>`;
 			var opt = document.createElement('option');
 			opt.value = `${js.ArrayList[i].meetingID}`;
-			opt.innerHTML = "Meeting with " + js.ArrayList[i].meetingWith + " on " + js.ArrayList[i].meetDate + " " + js.ArrayList[i].time + " at " + js.ArrayList[i].location;
+			opt.innerHTML = "Meeting with " + js.ArrayList[i].meetingWith + " on " + js.ArrayList[i].meetDate + " " + js.ArrayList[i].time + " - " + js.ArrayList[i].endTime + " at " + js.ArrayList[i].location;
 			meetingSelect.appendChild(opt);
 		}
 		document.getElementById("showMeetings").setAttribute("style", "display:block");
