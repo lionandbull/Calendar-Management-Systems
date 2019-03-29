@@ -33,6 +33,11 @@ function target_popup2(calName) {
     this.target = 'POPUPW';
 }
 
+function calInfoDivTrigger(){
+	document.getElementById("calInfoDiv").setAttribute("style", "display:block");
+	document.getElementById("calInfoPopover").setAttribute("data-content", sessionStorage.getItem("calInfo"));
+}
+
 function ShareDivTrigger(){
 	
 	document.getElementById("invitePopover").setAttribute("data-content", "https://users.wpi.edu/~wliu6/inviteSchedule.html?values=" + localStorage.getItem("currentCalID"));
@@ -58,7 +63,7 @@ function RemoveCalendar(){
 	var results = document.getElementById('resultsP');
 	var calName = document.getElementById('calSelect').value;
 	results.innerHTML = `I am running...`;
-	var remove_url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/remove-calendar";
+	var remove_url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/remove-calendar";
 	var data = {};
 	data["calName"] = calName;
 	var js = JSON.stringify(data);
@@ -78,7 +83,9 @@ function RemoveCalendar(){
 	  removeOptions(calSelect);
 	  loadCalSelect();
 	  if (calName === sessionStorage.getItem("currentCalName")){
-	  	document.getElementById("curP").innerHTML = "null";
+	  	// document.getElementById("curP").innerHTML = "Current Calendar: null";
+	  	document.getElementById("calInfoDiv").setAttribute("style", "display:none");
+	  	document.getElementById("inviteDiv").setAttribute("style", "display:none");
 	   	sessionStorage.clear();
 	   	document.getElementById("scheduleMeeting").setAttribute("style", "display:none");
 	   	document.getElementById("showMeetings").setAttribute("style", "display:none");
@@ -128,7 +135,7 @@ function CreateCalendar(){
 	}
 	
 	loadTimeout();
-  	var create_url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/create-calendar"
+  	var create_url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/create-calendar"
 	var data = {};
 	data["calName"] = calName;
 	data["startDate"] = startDate;
@@ -155,7 +162,7 @@ function CreateCalendar(){
 	  // results.innerHTML = `${response}`;
 	  
 	  hideLoader();
-
+	  localStorage.setItem("calInfo", info);
 	  if (response === "1"){
 	  	$('.alert').alert('close');
 	  	$("#modalBody").append(
@@ -235,7 +242,7 @@ function ScheduleMeeting(){
 	loadTimeout()
 
 	var calID = sessionStorage.getItem("currentCalID");
-	var schedule_url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/schedule-meeting";
+	var schedule_url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/schedule-meeting";
 	var data = {};
 	data["calID"] = calID;
 	data["meetDate"] = meetDate;
@@ -290,7 +297,7 @@ function CancelMeeting(){
 		return;	
 	}
 	loadTimeout();
-	var schedule_url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/cancel-meeting";
+	var schedule_url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/cancel-meeting";
 	var data = {};
 	data["calID"] = calID;
 	data["meetingID"] = meetingID;
@@ -314,7 +321,7 @@ function CancelMeeting(){
 	  	RetrieveOpenTimeslot({calID:sessionStorage.getItem("currentCalID"), date:document.getElementById('meetDate').value, type:"Open"});
 	  }
 	  successAlert("The meeting has been canceled!");
-	  // hideLoader();
+	  hideLoader();
 	} else {
 		results.innerHTML = `Failed!`;
 	  //updateHistory(arg1, arg2, "N/A");
@@ -339,7 +346,7 @@ function CloseCIT(){
 	}
 	
 	loadTimeout();
-	var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/close-timeslot";
+	var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/close-ts";
 	var data = {};
 	data["calID"] = calID;
 	data["date"] = date;
@@ -396,7 +403,7 @@ function CloseCATD(){
 	
 	loadTimeout();
 	
-	var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/close-timeslot";
+	var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/close-ts";
 	var data = {};
 	data["calID"] = calID;
 	data["date"] = date;
@@ -450,7 +457,7 @@ function CloseCATT(){
 	
 	loadTimeout();
 	
-	var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/close-timeslot";
+	var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/close-ts";
 	var data = {};
 	data["calID"] = calID;
 	data["time"] = time;
@@ -497,7 +504,7 @@ function CloseCATDWT(){
 	// }
 	
 	loadTimeout();
-	var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/close-timeslot";
+	var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/close-ts";
 	var data = {};
 	data["calID"] = calID;
 	data["day"] = day;
@@ -542,7 +549,7 @@ function RemoveDate(){
 	}
 	loadTimeout();
 
-	var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/remove-date";
+	var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/remove-date";
 	var data = {};
 	data["calID"] = calID;
 	data["date"] = date;
@@ -625,7 +632,7 @@ function AddDate(){
 	// }
 	
 	loadTimeout();
-	var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/add-date";
+	var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/add-date";
 	var data = {};
 	data["calID"] = calID;
 	data["date"] = date;
@@ -703,7 +710,7 @@ function LoadCalendars(){
 	
 	loadTimeout();
 
-	var load_url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/load-calendar";
+	var load_url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/load-calendar";
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", load_url + "?calName=" + calName, true);
 	// send the collected data as JSON
@@ -725,8 +732,10 @@ function LoadCalendars(){
 		var location = js["location"];
 		var duration = js["duration"];
 		if (response == "1"){
-			document.getElementById("curP").innerHTML = "Current Calendar: " + `"${calName}"` + " default range from " + `${startDate}` + 
-													" to " + `${endDate}`;
+			sessionStorage.setItem("calInfo", "Calendar Name: " + calName + "<br>Start Date: " + startDate
+        			+ "<br>End Date: " + endDate + "<br>Start Time: " + startTime + "(24-hour clock)<br>End Time: " + endTime 
+        			+ "(24-hour clock)<br>Location: " + location + "<br>Duration: " + duration + " min");
+			calInfoDivTrigger();
 			// results.innerHTML += "<br>Succeed!";
 			successAlert("You have loaded calendar: " + calName + ".");
 			results.innerHTML = results.innerHTML + '<br>End.</b>';
@@ -781,6 +790,7 @@ function LoadCalendars(){
 			ShowAllMeetings();
 			document.getElementById("closeTS").setAttribute("style", "display:block");
 			document.getElementById("album").setAttribute("style", "display:block");
+			
 
 			hideLoader();
 		
@@ -788,7 +798,9 @@ function LoadCalendars(){
 			// $('#calSelect option:selected').next().attr('selected', 'selected');
 			}
 		else {
-			document.getElementById("curP").innerHTML = "null";
+			// document.getElementById("curP").innerHTML = "null";
+			document.getElementById("calInfoDiv").setAttribute("style", "display:none");
+			document.getElementById("inviteDiv").setAttribute("style", "display:none");
 			sessionStorage.clear();
 			document.getElementById("scheduleMeeting").setAttribute("style", "display:none");
 			document.getElementById("showMeetings").setAttribute("style", "display:none");
@@ -815,7 +827,7 @@ function RetrieveOpenTimeslot(context){
 	}
 	
 	loadTimeout();
-    var retrieve_url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/retrieve-timeslots";
+    var retrieve_url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/retrieve-ts";
     var xhr = new XMLHttpRequest();	
     xhr.open("GET", retrieve_url + "?calID=" + context.calID + "&avaiDate=" + context.date + "&type=" + "Open", true);
     document.getElementById("resultsP").innerHTML = "I am running...";
@@ -878,7 +890,7 @@ function RetrieveOpenTimeslot(context){
 
 function RetrieveNonCloseTimeslot(context){
 	$('.alert').alert('close');
-    var retrieve_url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/retrieve-timeslots";
+    var retrieve_url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/retrieve-ts";
     var xhr = new XMLHttpRequest();	
     if (context.date === ""){
     	xhr.open("GET", retrieve_url + "?calID=" + context.calID + "&type=" + "NonClose", true);
@@ -937,7 +949,7 @@ function ShowAllMeetings(){
 	// 	return;
 	// }
 
-    var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/retrieve-all-meetings";
+    var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/retrieve-am";
     var xhr = new XMLHttpRequest();	
     var calID = sessionStorage.getItem("currentCalID");
 
@@ -967,7 +979,7 @@ function ShowAllMeetings(){
 			// document.getElementById("resultsP").innerHTML = document.getElementById("resultsP").innerHTML + `<br>${js.ArrayList[i].startTime}</b>`;
 			var opt = document.createElement('option');
 			opt.value = `${js.ArrayList[i].meetingID}`;
-			opt.innerHTML = "Meeting with " + js.ArrayList[i].meetingWith + " on " + js.ArrayList[i].meetDate + " " + js.ArrayList[i].time + " at " + js.ArrayList[i].location;
+			opt.innerHTML = "Meeting with " + js.ArrayList[i].meetingWith + " on " + js.ArrayList[i].meetDate + " " + js.ArrayList[i].time + " - " + js.ArrayList[i].endTime + " at " + js.ArrayList[i].location;
 			meetingSelect.appendChild(opt);
 		}
 		document.getElementById("showMeetings").setAttribute("style", "display:block");
@@ -989,7 +1001,7 @@ function ShowAllMeetings(){
 
 function ShowDailyMeetings(){
 
-    var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/retrieve-daily-meetings";
+    var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/retrieve-dm";
     var xhr = new XMLHttpRequest();	
     var calID = sessionStorage.getItem("currentCalID");
     var meetDate = document.getElementById('dailyMeetings').value;
@@ -1047,7 +1059,7 @@ function ShowDailyMeetings(){
 }
 
 function ShowMonthlyMeetings(){
-    var url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/retrieve-monthly-meetings";
+    var url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/retrieve-mm";
     var xhr = new XMLHttpRequest();	
     var calID = sessionStorage.getItem("currentCalID");
     var yearMonth = document.getElementById('monthlyMeetings').value;
@@ -1155,7 +1167,7 @@ function loadCalSelect(){
 
 	var userEmail = localStorage.getItem("UserEmail");
 	var userNickName = localStorage.getItem("UserNickName");
-	var show_url = "https://t9htii3jlj.execute-api.us-east-1.amazonaws.com/Alpha/show-calendars";
+	var show_url = "https://oi7iisyjp1.execute-api.us-east-2.amazonaws.com/Alpha/show-calendar";
 	var data = {};
 	var js = JSON.stringify(data);
 	var xhr = new XMLHttpRequest();
