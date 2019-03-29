@@ -6,8 +6,8 @@
     CognitoUser = CognitoIdentityServiceProvider.CognitoUser,
     AuthenticationDetails = CognitoIdentityServiceProvider.AuthenticationDetails,
     UserPool = new CognitoUserPool({
-      UserPoolId : "us-east-2_eqJfxA04u", // Your user pool id here
-      ClientId : "1n47vd7hr7u0hf5oo9k98dm8bt", // Your client id here
+      UserPoolId : "us-east-1_0GZtpN1pz", // Your user pool id here
+      ClientId : "4ctu6hrmjbe6pu703623n8mrq0", // Your client id here
     }),
     User;
 
